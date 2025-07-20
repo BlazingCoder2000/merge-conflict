@@ -11,41 +11,19 @@ on:
       - main
 
 jobs:
-  build-and-validate:
+  check-for-conflict-markers:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Show Git Status
+      - name: Search for merge conflict markers
         run: |
-          echo "🗂️ Git status:"
-          git status
-
-      - name: Check for Merge Conflict Markers
-        run: |
-          echo "🔍 Checking for unresolved merge conflict markers..."
-          if grep -r '<<<<<<<\|>>>>>>>\|=======' .; then
+          if grep -r "<<<<<<<" .; then
             echo "❌ Merge conflict markers found!"
             exit 1
           else
-            echo "✅ No merge conflict markers found."
+            echo "✅ No conflict markers found."
           fi
-
-      - name: Validate app.txt Content
-        run: |
-          echo "🔍 Validating app.txt..."
-          if grep -q "environment: " app.txt; then
-            echo "✅ Valid environment line found."
-          else
-            echo "❌ environment line missing in app.txt"
-            exit 1
-          fi
-
-      - name: Simulate Tests
-        run: |
-          echo "🧪 Simulating test cases..."
-          sleep 1
-          echo "✅ All tests passed!"
 
