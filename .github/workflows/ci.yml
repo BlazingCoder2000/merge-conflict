@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: ⬇️ Checkout code
         uses: actions/checkout@v4
 
-      - name: Search for merge conflict markers
+      - name: 🔍 Search for merge conflict markers
         run: |
           if grep -r "<<<<<<<" .; then
             echo "❌ Merge conflict markers found!"
